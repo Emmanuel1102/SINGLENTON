@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,6 +35,7 @@ public class TestFrame extends JFrame {
 
      //ModeloTabla modTabla;
      private static ModeloTabla modTabla =new ModeloTabla();
+     private static ManejaDatosEst baseDatos =new ManejaDatosEst();
      //ModeloTabla mt=modTabla;
     //ManipulaDatos MD;
 
@@ -72,13 +74,22 @@ public class TestFrame extends JFrame {
         JLabel creditos= new JLabel("Creditos:");
         JSpinner creditosS = new JSpinner();
 		 creditosS.setValue(1);
+         JLabel carrera= new JLabel("Carrera:");
+         JComboBox CarreraC= new JComboBox();
+         CarreraC.addItem("CARRERAS");
+         CarreraC.addItem("SISTEMAS");
+         CarreraC.addItem("CIVIL");
+         CarreraC.addItem("GESTION");
+         CarreraC.addItem("ADMINISTRACION");
+         CarreraC.addItem("ELECTRONICA");
+         CarreraC.addItem("ELECTRICIDAD");
         JButton registrar = new JButton("Registrar");
         JButton terminar = new JButton("Terminar");
         
         String consulta = "SELECT *FROM ADMINISTRADO.ESTUDIANTE";
         ModeloTabla mt=modTabla;
-       ManejaDatosEst baseDatos = new ManejaDatosEst();
-       mt.setDatos(baseDatos.consultaDatos(consulta),baseDatos);
+        ManejaDatosEst baseDatos = new ManejaDatosEst();
+        mt.setDatos(baseDatos.consultaDatos(consulta),baseDatos);
         JTable tabla1= new JTable();
         tabla1.setModel(mt);
  
@@ -95,8 +106,10 @@ public class TestFrame extends JFrame {
         panelContenido.add(edadS);
         panelContenido.add(semestre);
         panelContenido.add(SemestreS);
-         panelContenido.add(creditos);
+        panelContenido.add(creditos);
         panelContenido.add(creditosS);
+        panelContenido.add(carrera);
+        panelContenido.add(CarreraC);
         panelContenido.add(registrar);
         panelContenido.add(terminar);
         panelContenido.add(tabla1);   
