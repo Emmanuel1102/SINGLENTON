@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import control.ManejaDatosEst;
@@ -12,6 +7,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -31,20 +28,20 @@ import javax.swing.JTextField;
  */
 
 
-public class TestFrame extends JFrame {
+public class Interfaz extends JFrame {
 
      //ModeloTabla modTabla;
-     private static ModeloTabla modTabla =new ModeloTabla();
-     private static ManejaDatosEst baseDatos =new ManejaDatosEst();
+     private  static ModeloTabla modTabla = new ModeloTabla();
+     private  static ManejaDatosEst baseDatos;
      //ModeloTabla mt=modTabla;
     //ManipulaDatos MD;
 
  
-    public TestFrame( ModeloTabla modTabla ) {
+    public Interfaz( ModeloTabla modTabla ) throws ClassNotFoundException {
        
        setTitle("REGISTRO ACADEMICO");
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       setBounds(100, 100, 725, 500);
+      
        JPanel panelContenido = new JPanel(new FlowLayout(FlowLayout.CENTER));
        //JPanel panelContenido = new JPanel(new BoxLayout());
        panelContenido.setBackground(Color.WHITE);
@@ -86,7 +83,7 @@ public class TestFrame extends JFrame {
         JButton registrar = new JButton("Registrar");
         JButton terminar = new JButton("Terminar");
         
-        String consulta = "SELECT *FROM ADMINISTRADO.ESTUDIANTE";
+        String consulta = "SELECT *FROM ADMINISTRADOR.ESTUDIANTE";
         ModeloTabla mt=modTabla;
         ManejaDatosEst baseDatos = new ManejaDatosEst();
         mt.setDatos(baseDatos.consultaDatos(consulta),baseDatos);
@@ -113,9 +110,24 @@ public class TestFrame extends JFrame {
         panelContenido.add(registrar);
         panelContenido.add(terminar);
         panelContenido.add(tabla1);   
-        }
-    
+        
+        
+    terminar.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent arg0) {
+	 if(baseDatos.cerrarSesion()){
+                   System.exit(0);
+         }else{
+               dispose();
+         }
+           }});
 
+
+
+
+        }
+
+    
+     
     
        public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -123,10 +135,12 @@ public class TestFrame extends JFrame {
                 try {
                    // 
                  // new TestFrame().setVisible(true);
+                 //ModeloTabla tb = new ModeloTabla();
                   
-                  TestFrame tf=new TestFrame(modTabla);
+                  Interfaz tf=new Interfaz(modTabla);
                   tf.setVisible(true);
-                  
+                  tf.setSize(725, 500);
+                   
                    
                 } catch (Exception e) {
                     e.printStackTrace();
